@@ -36,7 +36,7 @@ public class Index {
 	
 	public void add(String fileName) {
 		Blob nBlob = new Blob(fileName);
-		blobs.put(nBlob.getSHA1(), fileName);
+		blobs.put(fileName,nBlob.getSHA1());
 		try {
 			
 			writeKeyVal.write(fileName+" : "+nBlob.getSHA1()+"\n");
@@ -68,5 +68,11 @@ public class Index {
 	}
 	
 	public void remove(String fileName) {
+		try {
+			Files.delete(Paths.get("./test/objects/"+blobs.get(fileName)+".txt"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

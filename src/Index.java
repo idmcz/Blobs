@@ -69,7 +69,17 @@ public class Index {
 	
 	public void remove(String fileName) {
 		try {
+			
 			Files.delete(Paths.get("./test/objects/"+blobs.get(fileName)+".txt"));
+			Files.delete(Paths.get("./test/index.txt"));
+			blobs.remove(fileName);
+			File index = new File("./test", "index.txt");
+			index.createNewFile();
+			FileWriter indexWr = new FileWriter("./test/index.txt");
+		    for (String key : blobs.keySet()) {
+		    	indexWr.write(key + " : " + blobs.get(key) + "\n");
+		    }
+		    indexWr.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

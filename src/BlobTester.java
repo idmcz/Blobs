@@ -17,6 +17,6 @@ public class BlobTester {
 		ind.closeFile();
 		
 		ind.remove("Hello.txt");
-		ind.remove("Bye.txt");
+		//ind.remove("Bye.txt");
 	}
 }

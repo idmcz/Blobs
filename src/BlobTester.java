@@ -11,8 +11,9 @@ public class BlobTester {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		ind.openFile();
 		ind.add("Hello.txt");
-		
+		ind.add("Bye.txt");
+		ind.closeFile();
 	}
 }

@@ -9,6 +9,8 @@ import java.util.*;
 
 public class Index {
 	HashMap<String, String> blobs;
+	FileWriter writeKeyVal;
+	
 	public Index() {
 		blobs = new HashMap<String,String>();
 	}
@@ -22,7 +24,6 @@ public class Index {
                 file.delete();
             }
         }
-        
 		Files.deleteIfExists(Paths.get("./test/objects"));
 		Files.createDirectory(Paths.get("./test/objects"));
 		File index = new File("./test", "index.txt");
@@ -37,9 +38,8 @@ public class Index {
 		Blob nBlob = new Blob(fileName);
 		blobs.put(nBlob.getSHA1(), fileName);
 		try {
-			FileWriter writeKeyVal = new FileWriter("./test/index.txt");
-			writeKeyVal.write(fileName+" : "+nBlob.getSHA1());
-			writeKeyVal.close();
+			
+			writeKeyVal.write(fileName+" : "+nBlob.getSHA1()+"\n");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,6 +48,25 @@ public class Index {
 			e.printStackTrace();
 		}
 	}
+	
+	public void openFile() {
+		try {
+			writeKeyVal = new FileWriter("./test/index.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void closeFile() {
+		try {
+			writeKeyVal.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void remove(String fileName) {
 	}
 }

@@ -14,7 +14,17 @@ public class Index {
 	}
 	
 	public void init() throws IOException {
-		Files.createDirectory(Paths.get("./test/object"));
+		
+		File objectsFolder = new File("./test/objects");
+		 
+        for (File file: Objects.requireNonNull(objectsFolder.listFiles())) {
+            if (!file.isDirectory()) {
+                file.delete();
+            }
+        }
+        
+		Files.deleteIfExists(Paths.get("./test/objects"));
+		Files.createDirectory(Paths.get("./test/objects"));
 		File index = new File("./test", "index.txt");
 		if(index.createNewFile()) {
 		}else {

@@ -26,7 +26,7 @@ public class Blob {
 		
 		filePath = new String(fileName);
 		try {
-	       contentBytes = readFile(filePath, StandardCharsets.UTF_8);
+	       contentBytes = readFile("./test/"+filePath, StandardCharsets.UTF_8);
 	       sha1 = toSHA1(contentBytes);
 	    } catch (IOException e) {
 	        e.printStackTrace();
@@ -34,6 +34,7 @@ public class Blob {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		contentStr = new String(contentBytes, StandardCharsets.UTF_8);
 		System.out.println(sha1);
 		SHA1Hash = new File("./test/objects", sha1 + ".txt");

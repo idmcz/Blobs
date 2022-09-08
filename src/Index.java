@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -13,8 +14,8 @@ public class Index {
 	}
 	
 	public void init() throws IOException {
-		Files.createDirectory(Paths.get("/path/to/object"));
-		File index = new File("index.txt");
+		Files.createDirectory(Paths.get("./test/object"));
+		File index = new File("./test", "index.txt");
 		if(index.createNewFile()) {
 		}else {
 			index.delete();
@@ -26,10 +27,13 @@ public class Index {
 		Blob nBlob = new Blob(fileName);
 		blobs.put(nBlob.getSHA1(), fileName);
 		try {
-			PrintWriter writeKeyVal = new PrintWriter("index.txt");
-			writeKeyVal.write(fileName+": "+nBlob.getSHA1());
+			FileWriter writeKeyVal = new FileWriter("./test/index.txt");
+			writeKeyVal.write(fileName+" : "+nBlob.getSHA1());
 			writeKeyVal.close();
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

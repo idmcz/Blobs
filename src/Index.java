@@ -69,7 +69,6 @@ public class Index {
 	
 	public void remove(String fileName) {
 		try {
-			
 			Files.delete(Paths.get("./test/objects/"+blobs.get(fileName)+".txt"));
 			Files.delete(Paths.get("./test/index.txt"));
 			blobs.remove(fileName);

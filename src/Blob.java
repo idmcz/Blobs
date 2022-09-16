@@ -1,4 +1,3 @@
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -21,7 +20,7 @@ public class Blob {
      private File SHA1Hash;
 	
      
-     private String directory = "/iCloud Drive⁩/Desktop⁩/⁨All⁩/⁨Honors Topics⁩/Blobs⁩/⁨test/objects/⁩";
+     private String directory = "objects/⁩";
 	public Blob(String fileName) {
 		
 		filePath = new String(fileName);

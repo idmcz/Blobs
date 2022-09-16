@@ -36,7 +36,7 @@ public class Blob {
 		
 		contentStr = new String(contentBytes, StandardCharsets.UTF_8);
 		System.out.println(sha1);
-		SHA1Hash = new File("./test/objects", sha1 + ".txt");
+		SHA1Hash = new File("./test/objects", sha1);
 		try {
 			if(SHA1Hash.createNewFile()) {
 				
@@ -48,7 +48,7 @@ public class Blob {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		wrFile(sha1+".txt", contentStr);
+		wrFile(sha1, contentStr);
 	}
 	
 	public String getSHA1() {

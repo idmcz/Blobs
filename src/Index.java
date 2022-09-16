@@ -13,6 +13,7 @@ public class Index {
 	
 	public Index() {
 		blobs = new HashMap<String,String>();
+		openFile();
 	}
 	
 	public void init() throws IOException {

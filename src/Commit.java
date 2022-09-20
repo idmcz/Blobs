@@ -23,6 +23,7 @@ public class Commit {
 		child = null;
 		date = getDate();
 		wrCommitFile(genSHA1Sub());
+		
 	}
 	
 	private String getDate() {

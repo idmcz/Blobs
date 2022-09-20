@@ -11,17 +11,17 @@ public class Commit {
 	String summary;
 	String author;
 	String date;
-	String parent;
+	Commit parent;
 	String child;
 	
-	public Commit(String pTree, String summary, String author, String parent) {
+	public Commit(String pTree, String summary, String author, Commit parent) throws IOException, NoSuchAlgorithmException {
 		this.pTree = pTree;
 		this.summary = summary;
 		this.author = author;
 		this.parent = parent;
 		child = null;
 		date = getDate();
-		
+		wrCommitFile(genSHA1Sub());
 	}
 	
 	private String getDate() {
@@ -36,8 +36,8 @@ public class Commit {
 	    return Base64.getEncoder().encodeToString(md.digest(convertme));
 	}
 	
-	private String genSHA1Sub() {
-		return(summary+date+author+parent);
+	private String genSHA1Sub() throws NoSuchAlgorithmException {
+		return(toSHA1(summary+date+author+parent));
 	}
 	
 	private void wrCommitFile(String fileName) throws IOException {
@@ -51,7 +51,6 @@ public class Commit {
 		if(child != null)
 			fw.write("./test/objects/"+child);
 		fw.write("\n" + author + "\n" + date + "\n" + summary);
-		
 		fw.close();
 	}
 	

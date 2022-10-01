@@ -10,7 +10,6 @@ import java.util.*;
 public class CommitTester {
 	public static void main(String [] args) throws NoSuchAlgorithmException, IOException {
 		Index i = new Index ();
-		i.init();
 		Blob b1 = new Blob ("test1.txt");
 		Blob b2 = new Blob ("text2.txt");
 		i.add("test1.txt");

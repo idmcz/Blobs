@@ -1,3 +1,4 @@
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -11,8 +12,9 @@ public class Index {
 	HashMap<String, String> blobs;
 	FileWriter writeKeyVal;
 	
-	public Index() {
+	public Index() throws IOException {
 		blobs = new HashMap<String,String>();
+		init ();
 		openFile();
 	}
 	
@@ -27,7 +29,7 @@ public class Index {
         }
 		Files.deleteIfExists(Paths.get("./test/objects"));
 		Files.createDirectory(Paths.get("./test/objects"));
-		File index = new File("./test", "index.txt");
+		File index = new File("index.txt");
 		if(index.createNewFile()) {
 		}else {
 			index.delete();
@@ -39,8 +41,19 @@ public class Index {
 		Blob nBlob = new Blob(fileName);
 		blobs.put(fileName,nBlob.getSHA1());
 		try {
+			String placebo = fileName+" : "+nBlob.getSHA1()+"\n";
+			try(FileWriter fw = new FileWriter("index.txt", true);
+				    BufferedWriter bw = new BufferedWriter(fw);
+				    PrintWriter out = new PrintWriter(bw))
+				{
+				    out.println(placebo);
+				    //more code
+				} catch (IOException e) {
+				    //exception handling left as an exercise for the reader
+				}
+//			writeKeyVal.write(fileName+" : "+nBlob.getSHA1()+"\n");
+			writeKeyVal.close();
 			
-			writeKeyVal.write(fileName+" : "+nBlob.getSHA1()+"\n");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

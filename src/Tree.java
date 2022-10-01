@@ -20,6 +20,7 @@ public class Tree {
 		sha1Array = getSha1(sha1Array.trim());//turn list of blobs/trees -> sha1 for name
 		
 		writeList();
+		
 	}
 	
 	private void writeList() throws IOException {

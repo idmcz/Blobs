@@ -28,7 +28,8 @@ public class Commit {
 		wrCommitFile(genSHA1Sub());
 		
 		Tree t = new Tree (convertIndex());
-		
+		Path p = Paths.get("index.txt");
+		Files.delete(p);
 		
 		//at the end do tree: parent
 		//in commit there should be a method abt get contents and create sha1, call that for parent to get that file

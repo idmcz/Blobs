@@ -1,6 +1,10 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
@@ -14,8 +18,7 @@ public class Commit {
 	String parent;
 	String child;
 	
-	public Commit(String pTree, String summary, String author, String parent) throws IOException, NoSuchAlgorithmException {
-		this.pTree = pTree;
+	public Commit(String summary, String author, String parent) throws IOException, NoSuchAlgorithmException {
 		this.summary = summary;
 		this.author = author;
 		this.parent = parent;
@@ -24,6 +27,21 @@ public class Commit {
 		date = getDate();
 		wrCommitFile(genSHA1Sub());
 		
+		Tree t = new Tree (convertIndex());
+		
+		
+		//at the end do tree: parent
+		//in commit there should be a method abt get contents and create sha1, call that for parent to get that file
+	}
+	
+	public static ArrayList convertIndex() throws FileNotFoundException {
+		Scanner s = new Scanner(new File("index.txt"));
+		ArrayList<String> list = new ArrayList<String>();
+		while (s.hasNext()){
+		    list.add(s.next());
+		}
+		s.close();
+		return list; 
 	}
 	
 	private String getDate() {

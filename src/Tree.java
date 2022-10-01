@@ -1,6 +1,9 @@
 import java.util.*;
 import java.io.*;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 
 public class Tree {
@@ -22,8 +25,13 @@ public class Tree {
 	private void writeList() throws IOException {
 		File f = new File("test/objects/" + sha1Array);
 		FileWriter writer = new FileWriter (f);
-		for (String s : fullArray) {
-			writer.append(s + "\n");
+//		Path pf1 = Paths.get("index.txt");
+//		String content = Files.readString(pf1);
+//		System.out.println (content);
+		for (String str : fullArray) {
+			String sha = str.substring(str.length()-40);
+			String fname = str.substring(0,str.length()-43);
+			writer.append("blob : " +sha+ " " +fname+"\n");
 		}
 		writer.close();
 	}

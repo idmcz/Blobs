@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,7 +29,7 @@ public class Commit {
 		wrCommitFile(genSHA1Sub());
 		
 		Tree t = new Tree (convertIndex());
-		Path p = Paths.get("index.txt");
+		Path p = Paths.get("test/index.txt");
 		Files.delete(p);
 		
 		//at the end do tree: parent
@@ -36,10 +37,12 @@ public class Commit {
 	}
 	
 	public static ArrayList convertIndex() throws FileNotFoundException {
-		Scanner s = new Scanner(new File("index.txt"));
+//		Path p = Paths.get("index.txt");
+		Scanner s = new Scanner(new File ("test/index.txt"));
 		ArrayList<String> list = new ArrayList<String>();
-		while (s.hasNext()){
-		    list.add(s.next());
+		while (s.hasNextLine()){
+			String ss = s.next();
+		    list.add(ss);
 		}
 		s.close();
 		return list; 
@@ -52,12 +55,23 @@ public class Commit {
 	}
 	
 	private String toSHA1(String str) throws NoSuchAlgorithmException {
-		byte[] convertme = str.getBytes();
-	    MessageDigest md = MessageDigest.getInstance("SHA-1");
-	    return Base64.getEncoder().encodeToString(md.digest(convertme));
+		try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] messageDigest = md.digest(str.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
 	}
 	
 	public String genSHA1Sub() throws NoSuchAlgorithmException {
+		String stuffing = summary+date+author+parent;
 		return(toSHA1(summary+date+author+parent));
 	}
 	
@@ -69,10 +83,16 @@ public class Commit {
 	}
 	
 	private void wrCommitFile(String fileName) throws IOException, NoSuchAlgorithmException {
-		File file = new File(".test/objects/"+fileName);
-		if(file.createNewFile()){}else{file.delete();file.createNewFile();}
+		File file = new File("test/objects/"+fileName);
+		System.out.println (file.getAbsolutePath());
+		if(file.createNewFile()){
+			
+		}else{
+			file.delete();
+		file.createNewFile();
+		}
 		FileWriter fw = new FileWriter(file);
-		fw.write("./test/objects/"+pTree + "\n");
+//		fw.write("./test/objects/"+pTree + "\n");//where the parent tree is
 		if(parent != null)
 			fw.write("./test/objects/"+parent);
 		fw.write("\n");

@@ -13,10 +13,12 @@ public class Tree {
 	private String sha1Array = ""; 
 	
 	public Tree (ArrayList<String> strArr) throws IOException {
+		ArrayList<String> srrr = strArr;
 		this.fullArray = strArr; //save array into fullArray
 		for (String s : fullArray) {//create string with all lines in array
 			sha1Array+=s + "\n";
 		}
+		String what = getSha1(sha1Array.trim());
 		sha1Array = getSha1(sha1Array.trim());//turn list of blobs/trees -> sha1 for name
 		
 		writeList();

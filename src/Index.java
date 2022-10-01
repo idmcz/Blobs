@@ -35,7 +35,7 @@ public class Index {
 		}
 	}
 	
-	public void add(String fileName) {
+	public void add(String fileName) throws IOException {
 		Blob nBlob = new Blob(fileName);
 		blobs.put(fileName,nBlob.getSHA1());
 		try {

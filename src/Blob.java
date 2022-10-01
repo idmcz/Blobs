@@ -3,6 +3,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Scanner;
 import java.io.*;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -21,14 +22,12 @@ public class Blob {
 	
      
      private String directory = "objects/⁩";
-	public Blob(String fileName) {
+	public Blob(String fileName) throws IOException {
 		
 		filePath = new String(fileName);
 		try {
 	       contentBytes = readFile("./test/"+filePath, StandardCharsets.UTF_8);
-	       sha1 = toSHA1(contentBytes);
-	    } catch (IOException e) {
-	        e.printStackTrace();
+	       sha1 = toSHA1(fileName);
 	    } catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,9 +80,20 @@ public class Blob {
 		    }
 	}
 	
-	private String toSHA1(byte[] convertme) throws NoSuchAlgorithmException {
-	    MessageDigest md = MessageDigest.getInstance("SHA-1");
-	    return Base64.getEncoder().encodeToString(md.digest(convertme));
+	private String toSHA1(String input) throws NoSuchAlgorithmException {
+		 try {
+	            MessageDigest md = MessageDigest.getInstance("SHA-1");
+	            byte[] messageDigest = md.digest(input.getBytes());
+	            BigInteger no = new BigInteger(1, messageDigest);
+	            String hashtext = no.toString(16);
+	            while (hashtext.length() < 32) {
+	                hashtext = "0" + hashtext;
+	            }
+	            return hashtext;
+	        }
+	        catch (NoSuchAlgorithmException e) {
+	            throw new RuntimeException(e);
+	        }
 	}
 	
 }

@@ -21,18 +21,21 @@ public class Commit {
 	String date;
 	String parent;
 	String child;
+	String prevT;
 	
 	public Commit(String summary, String author, String parent) throws IOException, NoSuchAlgorithmException {
 		this.summary = summary;
 		this.author = author;
 		this.parent = parent;
 	
-		child = null;
 		date = getDate();
-		wrCommitFile(genSHA1Sub());
+		
 		
 		
 		Tree t = new Tree (convertIndex(),genSHA1Sub());
+		prevT = t.getTreeSha();
+		child = prevT;
+		wrCommitFile(genSHA1Sub());
 		PrintWriter writer = new PrintWriter("index");
 		writer.print("");
 		writer.close();
@@ -44,6 +47,8 @@ public class Commit {
 	public String getPTree () throws IOException {
 		if (parent!=null) {
 		BufferedReader brTest = new BufferedReader(new FileReader("test/objects/"+parent));
+	    brTest.readLine();
+	    brTest.readLine();
 	    return brTest.readLine();
 		}
 		return "null";
@@ -107,7 +112,10 @@ public class Commit {
 		/**
 		 * PREVIOUS TREE'S SHA
 		 */
-		fw.write(getPTree());
+		if (getPTree()==null) 
+			fw.write("null");
+		else 
+			fw.write(getPTree());
 		fw.write("\n");
 		/** 
 		 * PREVIOUS COMMIT'S SHA
@@ -122,6 +130,11 @@ public class Commit {
 //		fw.write("\n");
 //		if(child != null)
 //			fw.write(child);
+		/**
+		 * CHILD TREE/ CURRENT TREE
+		 */
+		if(child != null)
+			fw.write(child);
 		/**
 		 * OTHER STUFF
 		 */

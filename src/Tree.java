@@ -43,6 +43,9 @@ public class Tree {
 		writer.close();
 	}
 	
+	public String getTreeSha () {
+		return sha1Array;
+	}
 	
 	private static String getSha1 (String input) {
 		String value = input;

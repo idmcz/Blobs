@@ -29,7 +29,7 @@ public class Commit {
 		wrCommitFile(genSHA1Sub());
 		
 		Tree t = new Tree (convertIndex());
-		Path p = Paths.get("test/index.txt");
+		Path p = Paths.get("index");
 		Files.delete(p);
 		
 		//at the end do tree: parent
@@ -38,7 +38,7 @@ public class Commit {
 	
 	public static ArrayList convertIndex() throws FileNotFoundException {
 //		Path p = Paths.get("index.txt");
-		Scanner s = new Scanner(new File ("test/index.txt"));
+		Scanner s = new Scanner(new File ("index"));
 		ArrayList<String> list = new ArrayList<String>();
 		while (s.hasNextLine()){
 			String ss = s.next();

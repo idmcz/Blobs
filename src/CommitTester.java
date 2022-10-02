@@ -9,9 +9,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 public class CommitTester {
 	public static void main(String [] args) throws NoSuchAlgorithmException, IOException {
-		Index i = new Index ();
 		Blob b1 = new Blob ("test1.txt");
 		Blob b2 = new Blob ("text2.txt");
+		Index i = new Index ();
 		i.add("test1.txt");
 		i.add("text2.txt");
 		Commit com1 = new Commit("did nothing", "Idalis Da-Goat McZeal", null);

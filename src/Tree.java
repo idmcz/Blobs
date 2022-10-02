@@ -8,14 +8,14 @@ import java.security.MessageDigest;
 
 public class Tree {
 	
-	private ArrayList<String> fullArray;
+	private ArrayList<String> insideIndex;
 	
 	private String sha1Array = ""; 
 	
 	public Tree (ArrayList<String> strArr) throws IOException {
 		ArrayList<String> srrr = strArr;
-		this.fullArray = strArr; //save array into fullArray
-		for (String s : fullArray) {//create string with all lines in array
+		this.insideIndex = strArr; //save array into fullArray
+		for (String s : insideIndex) {//create string with all lines in array
 			sha1Array+=s + "\n";
 		}
 		String what = getSha1(sha1Array.trim());
@@ -31,7 +31,7 @@ public class Tree {
 //		Path pf1 = Paths.get("index.txt");
 //		String content = Files.readString(pf1);
 //		System.out.println (content);
-		for (String str : fullArray) {
+		for (String str : insideIndex) {
 			String sha = str.substring(str.length()-40);
 			String fname = str.substring(0,str.length()-43);
 			writer.append("blob : " +sha+ " " +fname+"\n");

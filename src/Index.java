@@ -29,7 +29,7 @@ public class Index {
         }
 		Files.deleteIfExists(Paths.get("./test/objects"));
 		Files.createDirectory(Paths.get("./test/objects"));
-		File index = new File("index.txt");
+		File index = new File("index");
 		if(index.createNewFile()) {
 		}else {
 			index.delete();
@@ -42,7 +42,7 @@ public class Index {
 		blobs.put(fileName,nBlob.getSHA1());
 		try {
 			String placebo = fileName+" : "+nBlob.getSHA1()+"\n";
-			try(FileWriter fw = new FileWriter("index.txt", true);
+			try(FileWriter fw = new FileWriter("index", true);
 				    BufferedWriter bw = new BufferedWriter(fw);
 				    PrintWriter out = new PrintWriter(bw))
 				{
@@ -65,7 +65,7 @@ public class Index {
 	
 	public void openFile() {
 		try {
-			writeKeyVal = new FileWriter("./test/index.txt");
+			writeKeyVal = new FileWriter("index");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,11 +84,11 @@ public class Index {
 	public void remove(String fileName) {
 		try {
 			Files.delete(Paths.get("./test/objects/"+blobs.get(fileName)+".txt"));
-			Files.delete(Paths.get("./test/index.txt"));
+			Files.delete(Paths.get("index"));
 			blobs.remove(fileName);
-			File index = new File("./test", "index.txt");
+			File index = new File("index");
 			index.createNewFile();
-			FileWriter indexWr = new FileWriter("./test/index.txt");
+			FileWriter indexWr = new FileWriter("index");
 		    for (String key : blobs.keySet()) {
 		    	indexWr.write(key + " : " + blobs.get(key) + "\n");
 		    }

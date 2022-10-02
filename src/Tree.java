@@ -9,20 +9,20 @@ import java.security.MessageDigest;
 public class Tree {
 	
 	private ArrayList<String> insideIndex;
-	
+	public String pTreeSha;
 	private String sha1Array = ""; 
 	
-	public Tree (ArrayList<String> strArr) throws IOException {
+	public Tree (ArrayList<String> strArr, String pTreeSha) throws IOException {
 		ArrayList<String> srrr = strArr;
+		this.pTreeSha = pTreeSha;
 		this.insideIndex = strArr; //save array into fullArray
 		for (String s : insideIndex) {//create string with all lines in array
 			sha1Array+=s + "\n";
 		}
-		String what = getSha1(sha1Array.trim());
+//		String what = getSha1(sha1Array.trim());
 		sha1Array = getSha1(sha1Array.trim());//turn list of blobs/trees -> sha1 for name
 		
 		writeList();
-		
 	}
 	
 	private void writeList() throws IOException {
@@ -39,6 +39,7 @@ public class Tree {
 			writer.append("blob : " +sha+ " " +fname+"\n");
 			}
 		}
+		writer.append("tree: " + pTreeSha);
 		writer.close();
 	}
 	

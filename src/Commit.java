@@ -1,7 +1,10 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,15 +31,25 @@ public class Commit {
 		date = getDate();
 		wrCommitFile(genSHA1Sub());
 		
-		Tree t = new Tree (convertIndex());
-		Path p = Paths.get("index");
-		Files.delete(p);
+		
+		Tree t = new Tree (convertIndex(),genSHA1Sub());
+		PrintWriter writer = new PrintWriter("index");
+		writer.print("");
+		writer.close();
 		
 		//at the end do tree: parent
 		//in commit there should be a method abt get contents and create sha1, call that for parent to get that file
 	}
 	
-	public static ArrayList convertIndex() throws FileNotFoundException {
+	public String getPTree () throws IOException {
+		if (parent!=null) {
+		BufferedReader brTest = new BufferedReader(new FileReader("test/objects/"+parent));
+	    return brTest.readLine();
+		}
+		return "null";
+	}
+	
+	public static ArrayList <String> convertIndex() throws FileNotFoundException {
 //		Path p = Paths.get("index.txt");
 		Scanner s = new Scanner(new File ("index"));
 		ArrayList<String> list = new ArrayList<String>();
@@ -71,7 +84,6 @@ public class Commit {
 	}
 	
 	public String genSHA1Sub() throws NoSuchAlgorithmException {
-		String stuffing = summary+date+author+parent;
 		return(toSHA1(summary+date+author+parent));
 	}
 	
@@ -92,12 +104,12 @@ public class Commit {
 		file.createNewFile();
 		}
 		FileWriter fw = new FileWriter(file);
-//		fw.write("./test/objects/"+pTree + "\n");//where the parent tree is
-		if(parent != null)
-			fw.write("./test/objects/"+parent);
-		fw.write("\n");
-		if(child != null)
-			fw.write("./test/objects/"+child);
+		fw.write(parent);//where the parent tree is
+//		if(parent != null)
+//			fw.write(parent);
+//		fw.write("\n");
+//		if(child != null)
+//			fw.write(child);
 		fw.write("\n" + author + "\n" + date + "\n" + summary);
 		fw.close();
 	}

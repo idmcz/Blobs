@@ -19,15 +19,16 @@ public class CommitTester {
 //		Files.delete(p);
 		Blob b3 = new Blob ("test3.txt");
 		Blob b4 = new Blob ("test4.txt");
-		Index i2 = new Index ();
-		i2.init();
-		i2.add("test3.txt");
-		i2.add("test4.txt");
+//		Index i2 = new Index ();
+//		i2.init();
+		i.add("test3.txt");
+		i.add("test4.txt");
 		/**
 		 * make a bunch of files
 		 * add only a couple, commit, add then commit
 		 */
 		//parent is the sha'd version of the commit
+		String s = com1.genSHA1Sub();
 		Commit com2 = new Commit("did something", "Naalah Shiddy-Pants",com1.genSHA1Sub());
 //		Path p2 = Paths.get("test/index.txt");
 //		Files.delete(p2);

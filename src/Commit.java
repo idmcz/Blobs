@@ -41,7 +41,7 @@ public class Commit {
 		Scanner s = new Scanner(new File ("index"));
 		ArrayList<String> list = new ArrayList<String>();
 		while (s.hasNextLine()){
-			String ss = s.next();
+			String ss = s.nextLine();
 		    list.add(ss);
 		}
 		s.close();

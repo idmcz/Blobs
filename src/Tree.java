@@ -32,9 +32,12 @@ public class Tree {
 //		String content = Files.readString(pf1);
 //		System.out.println (content);
 		for (String str : insideIndex) {
+			if (!str.equals("")) {
+			//issue is that @index 1 of inside index is a space, should fix later
 			String sha = str.substring(str.length()-40);
-			String fname = str.substring(0,str.length()-43);
+			String fname = str.substring(0,str.length()-42);
 			writer.append("blob : " +sha+ " " +fname+"\n");
+			}
 		}
 		writer.close();
 	}

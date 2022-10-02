@@ -104,12 +104,27 @@ public class Commit {
 		file.createNewFile();
 		}
 		FileWriter fw = new FileWriter(file);
+		/**
+		 * PREVIOUS TREE'S SHA
+		 */
+		fw.write(getPTree());
+		fw.write("\n");
+		/** 
+		 * PREVIOUS COMMIT'S SHA
+		 */
+		if (parent!=null)
 		fw.write(parent);//where the parent tree is
+		else
+			fw.write("null");
+		fw.write("\n");
 //		if(parent != null)
 //			fw.write(parent);
 //		fw.write("\n");
 //		if(child != null)
 //			fw.write(child);
+		/**
+		 * OTHER STUFF
+		 */
 		fw.write("\n" + author + "\n" + date + "\n" + summary);
 		fw.close();
 	}

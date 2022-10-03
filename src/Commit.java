@@ -134,7 +134,6 @@ public class Commit {
 		 */
 		fw.write("null");
 		if (parent!=null) {
-			String aprpar = parent;
 		FileReader f = new FileReader ("test/objects/"+parent);
 		BufferedReader br = new BufferedReader (f);
 		String pt1 = br.readLine() + "\n" + br.readLine();

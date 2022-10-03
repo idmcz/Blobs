@@ -15,24 +15,24 @@ public class CommitTester {
 		i.add("test1.txt");
 		i.add("text2.txt");
 		Commit com1 = new Commit("did nothing", "Idalis Da-Goat McZeal", null);
-//		Path p = Paths.get("index.txt");
-//		Files.delete(p);
+
 		Blob b3 = new Blob ("test3.txt");
 		Blob b4 = new Blob ("test4.txt");
-//		Index i2 = new Index ();
-//		i2.init();
 		i.add("test3.txt");
 		i.add("test4.txt");
-		/**
-		 * make a bunch of files
-		 * add only a couple, commit, add then commit
-		 */
-		//parent is the sha'd version of the commit
 		String s = com1.genSHA1Sub();
 		Commit com2 = new Commit("did something", "Naalah Shiddy-Pants",com1.genSHA1Sub());
-//		i.add("*deleted* fileToDelete.txt");
-//		Path p2 = Paths.get("test/index.txt");
-//		Files.delete(p2);
-//		Scanner sc = new Scanner();
+		
+		Blob b5 = new Blob ("test5.txt");
+		i.add("test5.txt");
+		Commit com3 = new Commit("did another thing", "I AM THE THIRD FILE",com2.genSHA1Sub());
+		
+		Blob b6 = new Blob ("test6.txt");
+		Blob b7 = new Blob ("test7.txt");
+		Blob b8 = new Blob ("test8.txt");
+		i.add("test6.txt");
+		i.add("test7.txt");
+		i.add("test8.txt");
+		Commit com4 = new Commit("did the last thing", "fourth the best",com3.genSHA1Sub());
 	}
 }

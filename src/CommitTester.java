@@ -30,6 +30,7 @@ public class CommitTester {
 		//parent is the sha'd version of the commit
 		String s = com1.genSHA1Sub();
 		Commit com2 = new Commit("did something", "Naalah Shiddy-Pants",com1.genSHA1Sub());
+//		i.add("*deleted* fileToDelete.txt");
 //		Path p2 = Paths.get("test/index.txt");
 //		Files.delete(p2);
 //		Scanner sc = new Scanner();

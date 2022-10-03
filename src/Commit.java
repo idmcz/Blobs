@@ -31,8 +31,7 @@ public class Commit {
 		date = getDate();
 		
 		
-		
-		Tree t = new Tree (convertIndex(),genSHA1Sub());
+		Tree t = new Tree (convertIndex(),getPTree());
 		prevT = t.getTreeSha();
 		child = prevT;
 		wrCommitFile(genSHA1Sub());
@@ -110,12 +109,16 @@ public class Commit {
 		}
 		FileWriter fw = new FileWriter(file);
 		/**
-		 * PREVIOUS TREE'S SHA
+		 * XX PREVIOUS TREE'S SHA
+		 * -- CURRENT TREE'S CHILD
 		 */
-		if (getPTree()==null) 
-			fw.write("null");
-		else 
-			fw.write(getPTree());
+//		if (getPTree()==null) 
+//			fw.write("null");
+//		else 
+//			fw.write(getPTree());
+//		fw.write("\n");
+		if(child != null)
+			fw.write(child);
 		fw.write("\n");
 		/** 
 		 * PREVIOUS COMMIT'S SHA
@@ -125,16 +128,22 @@ public class Commit {
 		else
 			fw.write("null");
 		fw.write("\n");
-//		if(parent != null)
-//			fw.write(parent);
-//		fw.write("\n");
-//		if(child != null)
-//			fw.write(child);
 		/**
-		 * CHILD TREE/ CURRENT TREE
+		 * XX CHILD TREE/ CURRENT TREE
+		 * NEXT COMMIT'S SHA, this one is actually just rewriting the previous commits third line
 		 */
-		if(child != null)
-			fw.write(child);
+		fw.write("null");
+		if (parent!=null) {
+			String aprpar = parent;
+		FileReader f = new FileReader ("test/objects/"+parent);
+		BufferedReader br = new BufferedReader (f);
+		String pt1 = br.readLine() + "\n" + br.readLine();
+		br.readLine();
+		String pt2 = br.readLine() + "\n" + br.readLine() +  "\n" + br.readLine() + "\n";
+		PrintWriter rew = new PrintWriter ("test/objects/"+parent);
+		rew.write (pt1 + "\n" + genSHA1Sub() + "\n" + pt2);
+		rew.close();
+		}
 		/**
 		 * OTHER STUFF
 		 */

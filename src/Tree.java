@@ -25,13 +25,28 @@ public class Tree {
 		writeList();
 	}
 	
+	public void caught () {
+		
+	}
+	
+	public void comb (String prev, String fName) throws IOException {
+		
+		BufferedReader br = new BufferedReader(new FileReader (prev));
+		while (br.ready()) {
+			String cur = br.readLine();
+			if (cur.substring(cur.length()-fName.length()).equals(fName))
+		}
+	}
+	
 	private void writeList() throws IOException {
 		File f = new File("test/objects/" + sha1Array);
 		FileWriter writer = new FileWriter (f);
-//		Path pf1 = Paths.get("index.txt");
-//		String content = Files.readString(pf1);
-//		System.out.println (content);
+		writer.append("tree : " + pTreeSha);
 		for (String str : insideIndex) {
+			//catching deleted files
+			if (str.substring (0,9).equals ("*deleted*")) {
+				comb (pTreeSha, str.substring(10));
+			}
 			if (!str.equals("")) {
 			//issue is that @index 1 of inside index is a space, should fix later
 			String sha = str.substring(str.length()-40);
@@ -39,7 +54,6 @@ public class Tree {
 			writer.append("blob : " +sha+ " " +fname+"\n");
 			}
 		}
-		writer.append("tree: " + pTreeSha);
 		writer.close();
 	}
 	

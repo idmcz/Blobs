@@ -19,7 +19,11 @@ public class Index {
 	}
 	
 	public void init() throws IOException {
-		
+		//creates empty file of head
+		//when you create a commit only thing it should have is sha of most recent commit
+		//^^ only update head if you create a commit of its sha
+		//should read from head
+		//parent is always the head, head always only has ONE sha in it
 		File objectsFolder = new File("./test/objects");
 		 
         for (File file: Objects.requireNonNull(objectsFolder.listFiles())) {
@@ -35,6 +39,12 @@ public class Index {
 			index.delete();
 			index.createNewFile();
 		}
+	}
+	
+	public void delete (String fileName) throws FileNotFoundException {
+		blobs.remove(fileName);
+		PrintWriter out = new PrintWriter("index");
+		out.append("*deleted* " + fileName);
 	}
 	
 	public void add(String fileName) throws IOException {

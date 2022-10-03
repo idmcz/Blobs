@@ -46,8 +46,8 @@ public class Commit {
 	public String getPTree () throws IOException {
 		if (parent!=null) {
 		BufferedReader brTest = new BufferedReader(new FileReader("test/objects/"+parent));
-	    brTest.readLine();
-	    brTest.readLine();
+	   // brTest.readLine();
+	   // brTest.readLine();
 	    return brTest.readLine();
 		}
 		return "null";

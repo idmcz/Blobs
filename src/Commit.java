@@ -35,6 +35,10 @@ public class Commit {
 		prevT = t.getTreeSha();
 		child = prevT;
 		wrCommitFile(genSHA1Sub());
+		PrintWriter head = new PrintWriter(new FileWriter ("head"));
+		String shamama = genSHA1Sub();
+		head.print(shamama);
+		head.close();
 		PrintWriter writer = new PrintWriter("index");
 		writer.print("");
 		writer.close();

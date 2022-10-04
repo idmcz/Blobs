@@ -35,10 +35,6 @@ public class Tree {
 		return true;
 	}
 	
-	public void comb(String fileName) {
-		comb ()
-	}
-	
 	public void comb (String prev, String fName) throws IOException {
 		String first ="";
 		int num = 0;
@@ -78,7 +74,8 @@ public class Tree {
 			if (str.substring (0,9).equals ("*deleted*")) {
 				comb (pTreeSha, str.substring(10));
 			}else if(str.substring (0,8).equals ("*edited*")) {
-				comb (pTreeSha, str.substring(10));
+				comb (pTreeSha, str.substring(9));
+				Blob b = new Blob (str.substring(9));
 			}
 				else {
 			String sha = str.substring(str.length()-40);

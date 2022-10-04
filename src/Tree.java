@@ -14,6 +14,7 @@ public class Tree {
 	public ArrayList <String> toPut;
 	
 	public Tree (ArrayList<String> strArr, String pTreeSha) throws IOException {
+		toPut = new ArrayList <String>();
 		ArrayList<String> srrr = strArr;
 		this.pTreeSha = pTreeSha;
 		this.insideIndex = strArr; //save array into fullArray
@@ -26,18 +27,47 @@ public class Tree {
 		writeList();
 	}
 	
-//	public void comb (String prev, String fName) throws IOException {
-//		BufferedReader br = new BufferedReader(new FileReader (prev));
-//		String first = br.readLine(); // hash of previous tree
-//		while (br.ready()) {
-//			String cur = br.readLine();
-//			toPut.add(cur);
-//			if (cur.substring(cur.length()-fName.length()).equals(fName)) {
-//				toPut.add(first);
-//			}
-//		}
-//		comb (first.substring(7),fName);
-//	}
+	public boolean previousTreeExists(String prev) throws IOException {
+		BufferedReader br = new BufferedReader (new FileReader ("test/objects/" + prev));
+		if (br.readLine().substring (7).equals("null")){
+			return false;
+		}
+		return true;
+	}
+	
+	public void comb(String fileName) {
+		comb ()
+	}
+	
+	public void comb (String prev, String fName) throws IOException {
+		String first ="";
+		int num = 0;
+		if (previousTreeExists(prev)) {
+			String pr = prev;
+		BufferedReader br = new BufferedReader(new FileReader ("test/objects/" + prev));
+		first = br.readLine(); // hash of previous tree
+		while (br.ready()) {
+			String cur = br.readLine();
+			if (cur.substring(cur.length()-fName.length()).equals(fName)) {
+				toPut.add(first);
+				//add rest of the shit then break
+			}else
+			toPut.add(cur);//bruh
+		}
+		}else {
+			BufferedReader br = new BufferedReader(new FileReader ("test/objects/" + prev));
+			first = br.readLine(); // hash of previous tree
+			while (br.ready()) {
+				String cur = br.readLine();
+				if (!cur.contains(fName)) { 
+				toPut.add(cur);//bruh
+				num = 1;
+				}
+		}
+		}
+		if (num ==0)
+		comb (first.substring(7),fName);
+	}
 	
 	private void writeList() throws IOException {
 		File f = new File("test/objects/" + sha1Array);
@@ -45,15 +75,20 @@ public class Tree {
 		writer.append("tree : " + pTreeSha + "\n");
 		for (String str : insideIndex) {
 			//catching deleted files
-//			if (str.substring (0,9).equals ("*deleted*")) {
-//				comb (pTreeSha, str.substring(10));
-//			}
-			if (!str.equals("")) {
-			//issue is that @index 1 of inside index is a space, should fix later
+			if (str.substring (0,9).equals ("*deleted*")) {
+				comb (pTreeSha, str.substring(10));
+			}else if(str.substring (0,8).equals ("*edited*")) {
+				comb (pTreeSha, str.substring(10));
+			}
+				else {
 			String sha = str.substring(str.length()-40);
 			String fname = str.substring(0,str.length()-42);
+			
 			writer.append("blob : " +sha+ " " +fname+"\n");
 			}
+		}
+		for (String s: toPut) {
+			writer.append(s + "\n");
 		}
 		writer.close();
 	}

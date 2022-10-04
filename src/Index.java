@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -41,17 +42,23 @@ public class Index {
 		}
 	}
 	
-	public void delete (String fileName) throws FileNotFoundException {
-		blobs.remove(fileName);
-		PrintWriter out = new PrintWriter("index");
-		out.append("*deleted* " + fileName);
+	public void delete (String fileName) throws IOException {
+		try(FileWriter fw = new FileWriter("index", true);
+			    BufferedWriter bw = new BufferedWriter(fw);
+			    PrintWriter out = new PrintWriter(bw))
+			{
+			    out.println("*deleted* " + fileName);
+			    //more code
+			} catch (IOException e) {
+			    //exception handling left as an exercise for the reader
+			}
 	}
 	
 	public void add(String fileName) throws IOException {
 		Blob nBlob = new Blob(fileName);
 		blobs.put(fileName,nBlob.getSHA1());
 		try {
-			String placebo = fileName+" : "+nBlob.getSHA1()+"\n";
+			String placebo = fileName+" : "+nBlob.getSHA1();
 			try(FileWriter fw = new FileWriter("index", true);
 				    BufferedWriter bw = new BufferedWriter(fw);
 				    PrintWriter out = new PrintWriter(bw))

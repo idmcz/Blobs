@@ -54,6 +54,18 @@ public class Index {
 			}
 	}
 	
+	public void edit (String fileName) throws IOException {
+		try(FileWriter fw = new FileWriter("index", true);
+			    BufferedWriter bw = new BufferedWriter(fw);
+			    PrintWriter out = new PrintWriter(bw))
+			{
+			    out.println("*edited* " + fileName);
+			    //more code
+			} catch (IOException e) {
+			    //exception handling left as an exercise for the reader
+			}
+	}
+	
 	public void add(String fileName) throws IOException {
 		Blob nBlob = new Blob(fileName);
 		blobs.put(fileName,nBlob.getSHA1());

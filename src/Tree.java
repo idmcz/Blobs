@@ -37,9 +37,7 @@ public class Tree {
 	
 	public void comb (String prev, String fName) throws IOException {
 		String first ="";
-		int num = 0;
 		if (previousTreeExists(prev)) {
-			String pr = prev;
 		BufferedReader br = new BufferedReader(new FileReader ("test/objects/" + prev));
 		first = br.readLine(); // hash of previous tree
 		while (br.ready()) {
@@ -57,11 +55,10 @@ public class Tree {
 				String cur = br.readLine();
 				if (!cur.contains(fName)) { 
 				toPut.add(cur);//bruh
-				num = 1;
 				}
 		}
 		}
-		if (num ==0)
+		if (previousTreeExists(prev))
 		comb (first.substring(7),fName);
 	}
 	
